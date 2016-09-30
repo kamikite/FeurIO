@@ -24,12 +24,12 @@ void setup() {
 }
 
 void loop() {
-  irWert = analogRead(IR_INPUT);
   sensorWert = analogRead(SENSOR_INPUT);
   tempWert = analogRead(TEMP_INPUT);
-  //Serial.println(sensorWert);
-  //Serial.println(tempWert);
-  //Serial.println(irWert);
+  Serial.print("Photo: ");
+  Serial.println(sensorWert);
+  Serial.print("Temperatur: ");
+  Serial.println(tempWert);
   if (My_Receiver.GetResults(&My_Decoder)) {
     My_Decoder.decode();
     //Serial.println(My_Decoder.value);
@@ -43,9 +43,9 @@ void loop() {
   }
 
   // Check Photosensor
-  if (sensorWert >= 300){
+  if (sensorWert >= 150){
     digitalWrite(LED_GREEN, HIGH);
-  } else if (sensorWert < 300){
+  } else if (sensorWert < 150){
     digitalWrite(LED_GREEN, LOW);
   }
 
@@ -56,5 +56,5 @@ void loop() {
     digitalWrite(LED_RED, LOW);
   }
   
-  //delay(3000);
+  delay(3000);
 }
