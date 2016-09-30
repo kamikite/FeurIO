@@ -1,23 +1,21 @@
-
 #include <IRLib.h>
-// IR ENTER BUTTON FD906F
+// IR ENTER BUTTON FD906F || 16617583
 // PIN
-int LED_GREEN = 6; //Fotowiderstand
-int LED_RED = 5; //Thermometer
-int LED_YELLOW = 4; // IR Reciever
+uint8_t LED_GREEN = 6; //Fotowiderstand
+uint8_t LED_RED = 5; //Thermometer
+uint8_t LED_YELLOW = 4; // IR Reciever
 int SENSOR_INPUT = A0;
 int TEMP_INPUT = A1;
-int IR_INPUT = 7;
+uint8_t IR_INPUT = 7;
+// VALUES
+uint8_t sensorWert = 0;
+uint8_t tempWert = 0;
 
-int sensorWert = 0;
-int tempWert = 0;
-
+//VARS
 IRrecv My_Receiver(IR_INPUT);
 IRdecode My_Decoder;
 
 void setup() {
-  // put your setup code here, to run once:
-  //pinMode(TEST_PIN, INPUT);
   pinMode(LED_GREEN, OUTPUT);
   pinMode(LED_RED, OUTPUT);
   pinMode(LED_YELLOW, OUTPUT);
@@ -26,15 +24,15 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   irWert = analogRead(IR_INPUT);
   sensorWert = analogRead(SENSOR_INPUT);
   tempWert = analogRead(TEMP_INPUT);
   //Serial.println(sensorWert);
   //Serial.println(tempWert);
+  //Serial.println(irWert);
   if (My_Receiver.GetResults(&My_Decoder)) {
-    My_Decoder.decode();    //Decode the data
-    //Serial.println(My_Decoder.value); //Show the results on serial monitor
+    My_Decoder.decode();
+    //Serial.println(My_Decoder.value);
     if (My_Decoder.value == 16617583){
       //Do On IREnter
       digitalWrite(LED_YELLOW, HIGH);
@@ -43,14 +41,15 @@ void loop() {
     }
     My_Receiver.resume();     //Restart the receiver
   }
-  
-  //Serial.println(irWert);
+
+  // Check Photosensor
   if (sensorWert >= 300){
     digitalWrite(LED_GREEN, HIGH);
   } else if (sensorWert < 300){
     digitalWrite(LED_GREEN, LOW);
   }
 
+  // Check Heatsensor
   if (tempWert >= 170){
     digitalWrite(LED_RED, HIGH);
   } else if (tempWert < 170){
