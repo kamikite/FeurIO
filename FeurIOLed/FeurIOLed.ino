@@ -141,8 +141,6 @@ void ledOff(uint8_t pin){
 }
 
 void fireLight(uint32_t c, uint32_t f, uint8_t pin) {
-  uint8_t q = 0;
-    //for (uint8_t q=0; q < 2; q++) {
   for (uint8_t i = 0; i < 2; i++){
     if (i == 0){
       strip[pin].setPixelColor(0, c); 
@@ -153,13 +151,6 @@ void fireLight(uint32_t c, uint32_t f, uint8_t pin) {
       strip[pin].setPixelColor(1, c);
       strip[pin].setPixelColor(2, f);
     }
-  }   
+  }     
   strip[pin].show();
-      //stripTest.begin();
-      //stripTest.show();
-      //delay(150);
-      //for (uint8_t i=0; i < strip[pin].numPixels(); i=i+2) {
-      //  strip[pin].setPixelColor(i+q, f);        //turn every third pixel off
-      //}
-   //}
 }
